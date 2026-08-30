@@ -1,0 +1,79 @@
+# Build output
+[Bb]in/
+[Oo]bj/
+
+# Visual Studio
+.vs/
+*.user
+*.userosscache
+*.suo
+*.userprefs
+*.sln.docstates
+
+# Visual Studio Code
+.vscode/
+
+# Rider / JetBrains
+.idea/
+*.sln.iml
+
+# NuGet
+*.nupkg
+*.snupkg
+packages/
+.nuget/
+project.lock.json
+project.fragment.lock.json
+
+# ASP.NET Core
+wwwroot/lib/
+wwwroot/dist/
+
+# Logs
+*.log
+logs/
+
+# Environment / local configuration
+.env
+.env.*
+!.env.example
+
+# User-specific appsettings
+appsettings.Local.json
+appsettings.Development.local.json
+appsettings.Production.local.json
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Test results
+TestResults/
+*.trx
+
+# Coverage
+coverage/
+coverage*.xml
+
+# Publish output
+publish/
+PublishProfiles/
+
+# Generated files
+Generated/
+GeneratedFiles/
+
+# Database files
+*.db
+*.db-shm
+*.db-wal
+
+# Certificates / keys
+*.pfx
+*.p12
+*.pem
+*.key
+
+# Azure / local development
+.azure/

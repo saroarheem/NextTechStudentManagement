@@ -25,9 +25,6 @@ packages/
 project.lock.json
 project.fragment.lock.json
 
-# ASP.NET Core
-wwwroot/lib/
-wwwroot/dist/
 
 # Logs
 *.log

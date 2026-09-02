@@ -1,6 +1,90 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-<div class="text-center">
-    <h1 class="display-4">Welcome to Student Management</h1>
+﻿@model IEnumerable<Student>
+
+@{
+    ViewData["Title"] = "Students";
+}
+
+<div class="container mt-4">
+
+    <div class="d-flex justify-content-between mb-3">
+        <h2>Student List</h2>
+
+        <a asp-action="Create" class="btn btn-primary">
+            Add Student
+        </a>
+    </div>
+
+    <form method="get">
+        <div class="input-group mb-3">
+            <input type="text"
+                   name="searchString"
+                   class="form-control"
+                   placeholder="Search by ID, Name or Email" />
+
+            <button type="submit" class="btn btn-success">
+                Search
+            </button>
+        </div>
+    </form>
+
+    <table class="table table-bordered table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>Student ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Mobile</th>
+                <th>Department</th>
+                <th>Course</th>
+                <th>Status</th>
+                <th width="220">Actions</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var student in Model)
+            {
+                <tr>
+                    <td>@student.StudentId</td>
+                    <td>@student.FullName</td>
+                    <td>@student.Email</td>
+                    <td>@student.Mobile</td>
+                    <td>@student.Department</td>
+                    <td>@student.Course</td>
+
+                    <td>
+                        @if (student.Status == "Active")
+                        {
+                            <span class="badge bg-success">Active</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-danger">Inactive</span>
+                        }
+                    </td>
+
+                    <td>
+                        <a asp-action="Details"
+                           asp-route-id="@student.Id"
+                           class="btn btn-info btn-sm">
+                            Details
+                        </a>
+
+                        <a asp-action="Edit"
+                           asp-route-id="@student.Id"
+                           class="btn btn-warning btn-sm">
+                            Edit
+                        </a>
+
+                        <a asp-action="Delete"
+                           asp-route-id="@student.Id"
+                           class="btn btn-danger btn-sm">
+                            Delete
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
 </div>

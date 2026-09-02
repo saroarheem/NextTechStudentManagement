@@ -1,5 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using NextTechStudentManagement.Data;
+using NextTechStudentManagement.Repositories.Interface;
+using NextTechStudentManagement.Repositories.Repo;
+using NextTechStudentManagement.Services.Interface;
+using NextTechStudentManagement.Services.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +14,10 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
+
+builder.Services.AddScoped<IStudentRepository, StudentRepository>();
+
+builder.Services.AddScoped<IStudentService, StudentService>();
 
 var app = builder.Build();
 
@@ -30,7 +38,7 @@ app.MapStaticAssets();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Student}/{action=Index}/{id?}")
+    pattern: "{controller=Dashboard}/{action=Index}/{id?}")
     .WithStaticAssets();
 
 

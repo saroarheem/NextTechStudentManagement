@@ -1,0 +1,174 @@
+﻿@using NextTechStudentManagement.ViewModel
+@model DashboardViewModel
+
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<style>
+    .dashboard-heading {
+        font-family: 'Source Serif 4', Georgia, serif;
+        font-weight: 700;
+        color: var(--ink);
+        margin-bottom: 1.75rem;
+    }
+
+    .stat-tile {
+        background: #FFFFFF;
+        border: 1px solid #E7E2D6;
+        border-left: 3px solid var(--slate);
+        border-radius: 4px;
+        padding: 1.25rem 1.5rem;
+        height: 100%;
+    }
+
+    .stat-tile--total {
+        border-left-color: var(--ink);
+    }
+
+    .stat-tile--active {
+        border-left-color: #3F7D58;
+    }
+
+    .stat-tile--inactive {
+        border-left-color: #B4483C;
+    }
+
+    .stat-tile .stat-label {
+        font-size: 0.85rem;
+        font-weight: 500;
+        color: var(--slate);
+        margin-bottom: 0.35rem;
+    }
+
+    .stat-tile .stat-value {
+        font-family: 'Source Serif 4', Georgia, serif;
+        font-size: 2.25rem;
+        font-weight: 700;
+        color: var(--ink);
+        line-height: 1;
+    }
+
+    .roster-card {
+        background: #FFFFFF;
+        border: 1px solid #E7E2D6;
+        border-radius: 6px;
+        overflow: hidden;
+    }
+
+        .roster-card .roster-header {
+            background: var(--parchment);
+            border-bottom: 1px solid #E7E2D6;
+            padding: 0.9rem 1.5rem;
+            font-weight: 600;
+            color: var(--ink);
+        }
+
+    .roster-table {
+        margin-bottom: 0;
+    }
+
+        .roster-table thead th {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--slate);
+            border-bottom: 1px solid #E7E2D6;
+            padding: 0.85rem 1.5rem;
+        }
+
+        .roster-table tbody td {
+            padding: 0.85rem 1.5rem;
+            vertical-align: middle;
+            border-color: #EFEBE1;
+        }
+
+    .status-pill {
+        display: inline-block;
+        padding: 0.2rem 0.65rem;
+        border-radius: 3px;
+        font-size: 0.8rem;
+        font-weight: 500;
+    }
+
+    .status-pill--active {
+        background: rgba(63, 125, 88, 0.12);
+        color: #3F7D58;
+    }
+
+    .status-pill--inactive {
+        background: rgba(180, 72, 60, 0.12);
+        color: #B4483C;
+    }
+</style>
+
+<div class="container mt-4">
+
+    <h2 class="dashboard-heading">Admin Dashboard</h2>
+
+    <div class="row g-3 mb-4">
+
+        <div class="col-md-4">
+            <div class="stat-tile stat-tile--total">
+                <div class="stat-label">Total Students</div>
+                <div class="stat-value">@Model.TotalStudents</div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="stat-tile stat-tile--active">
+                <div class="stat-label">Active Students</div>
+                <div class="stat-value">@Model.ActiveStudents</div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="stat-tile stat-tile--inactive">
+                <div class="stat-label">Inactive Students</div>
+                <div class="stat-value">@Model.InactiveStudents</div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="roster-card">
+
+        <div class="roster-header">
+            Recently Added Students
+        </div>
+
+        <div class="table-responsive">
+            <table class="table roster-table">
+
+                <thead>
+                    <tr>
+                        <th>Student ID</th>
+                        <th>Name</th>
+                        <th>Department</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    @foreach (var student in Model.RecentStudents)
+                    {
+                        <tr>
+                            <td>@student.StudentId</td>
+                            <td>@student.FullName</td>
+                            <td>@student.Department</td>
+                            <td>
+                                <span class="status-pill @(student.Status == "Active" ? "status-pill--active" : "status-pill--inactive")">
+                                    @student.Status
+                                </span>
+                            </td>
+                        </tr>
+                    }
+
+                </tbody>
+
+            </table>
+        </div>
+
+    </div>
+
+</div>

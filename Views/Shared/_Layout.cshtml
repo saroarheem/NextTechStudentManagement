@@ -5,26 +5,122 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - NextTechStudentManagement</title>
     <script type="importmap"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/NextTechStudentManagement.styles.css" asp-append-version="true" />
+    <style>
+            :root {
+                --ink: #141B2E;
+                --slate: #4A5268;
+                --parchment: #F6F4EF;
+                --brass: #B8863F;
+                --brass-soft: rgba(184, 134, 63, 0.35);
+            }
+
+            body {
+                font-family: 'Inter', system-ui, sans-serif;
+                background-color: var(--parchment);
+                color: var(--ink);
+            }
+
+            .site-header {
+                background-color: var(--ink);
+            }
+
+                .site-header .container-fluid {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    padding-top: 0.9rem;
+                    padding-bottom: 0.9rem;
+                }
+
+            .brand {
+                font-family: 'Source Serif 4', Georgia, serif;
+                font-weight: 700;
+                font-size: 1.25rem;
+                color: #FFFFFF !important;
+                letter-spacing: 0.01em;
+            }
+
+            .site-nav {
+                display: flex;
+                align-items: center;
+                gap: 1.75rem;
+                list-style: none;
+                margin: 0;
+                padding: 0;
+            }
+
+                .site-nav .nav-link {
+                    color: rgba(255, 255, 255, 0.75) !important;
+                    font-weight: 500;
+                    font-size: 0.95rem;
+                    padding: 0.35rem 0 !important;
+                    border-bottom: 2px solid transparent;
+                    transition: color 0.15s ease, border-color 0.15s ease;
+                }
+
+                    .site-nav .nav-link:hover,
+                    .site-nav .nav-link.active {
+                        color: #FFFFFF !important;
+                        border-bottom-color: var(--brass);
+                    }
+
+            .navbar-toggler {
+                border-color: var(--brass-soft);
+            }
+
+            .navbar-toggler-icon {
+                filter: invert(1);
+            }
+
+            main.content-area {
+                background: #FFFFFF;
+                border: 1px solid #E7E2D6;
+                border-radius: 6px;
+                padding: 2rem;
+                margin-top: 2rem;
+            }
+
+            .site-footer {
+                border-top: 1px solid var(--brass-soft);
+                color: var(--slate);
+                font-size: 0.875rem;
+                padding: 1.25rem 0;
+                margin-top: 3rem;
+            }
+
+                .site-footer a {
+                    color: var(--ink);
+                    font-weight: 500;
+                    text-decoration: none;
+                }
+
+                    .site-footer a:hover {
+                        color: var(--brass);
+                    }
+    </style>
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+    <header class="site-header">
+        <nav class="navbar navbar-expand-sm">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">NextTechStudentManagement</a>
+                <a class="navbar-brand brand" asp-area="" asp-controller="Dashboard" asp-action="Index">NextTech Student Management</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-end">
+                    <ul class="site-nav">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link" asp-area="" asp-controller="Dashboard" asp-action="Index">Dashboard</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Student" asp-action="Index">Student</a>
+                            <a class="nav-link" asp-area="" asp-controller="Student" asp-action="Index">Students</a>
                         </li>
                     </ul>
                 </div>
@@ -32,14 +128,14 @@
         </nav>
     </header>
     <div class="container">
-        <main role="main" class="pb-3">
+        <main role="main" class="content-area">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class="site-footer">
         <div class="container">
-            &copy; 2026 - NextTechStudentManagement - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2026 NextTech Student Management &nbsp;·&nbsp; <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

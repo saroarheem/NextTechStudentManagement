@@ -1,0 +1,37 @@
+﻿@model Student
+
+@{
+    ViewData["Title"] = "Student Details";
+}
+
+<div class="container mt-4">
+
+    <h2>Student Details</h2>
+
+    <div class="card">
+        <div class="card-body">
+
+            <p><strong>Student ID:</strong> @Model.StudentId</p>
+
+            <p><strong>Name:</strong> @Model.FullName</p>
+
+            <p><strong>Email:</strong> @Model.Email</p>
+
+            <p><strong>Mobile:</strong> @Model.Mobile</p>
+
+            <p><strong>Department:</strong> @Model.Department</p>
+
+            <p><strong>Course:</strong> @Model.Course</p>
+
+            <p><strong>Status:</strong> @Model.Status</p>
+
+            <p><strong>Created:</strong> @Model.CreatedAt</p>
+
+        </div>
+    </div>
+
+    <a asp-action="Index" class="btn btn-secondary mt-3">
+        Back
+    </a>
+
+</div>

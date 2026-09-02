@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Student>
+﻿@* @model IEnumerable<Student>
 
 @{
     ViewData["Title"] = "Students";
@@ -86,5 +86,244 @@
             }
         </tbody>
     </table>
+
+</div> *@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@model IEnumerable<Student>
+
+@{
+    ViewData["Title"] = "Students";
+}
+
+<style>
+    .page-heading {
+        font-family: 'Source Serif 4', Georgia, serif;
+        font-weight: 700;
+        color: var(--ink);
+    }
+
+    .btn-brass {
+        background: var(--ink);
+        border: 1px solid var(--ink);
+        color: #FFFFFF;
+        font-weight: 500;
+        padding: 0.5rem 1.1rem;
+        border-radius: 4px;
+        transition: background 0.15s ease, border-color 0.15s ease;
+    }
+
+        .btn-brass:hover {
+            background: var(--brass);
+            border-color: var(--brass);
+            color: #FFFFFF;
+        }
+
+    .search-form {
+        max-width: 480px;
+    }
+
+        .search-form .form-control {
+            border: 1px solid #E7E2D6;
+            border-right: none;
+            padding: 0.55rem 0.9rem;
+        }
+
+            .search-form .form-control:focus {
+                box-shadow: none;
+                border-color: var(--brass);
+            }
+
+        .search-form .btn-search {
+            background: #FFFFFF;
+            border: 1px solid #E7E2D6;
+            border-left: none;
+            color: var(--slate);
+            font-weight: 500;
+            padding: 0.55rem 1.1rem;
+        }
+
+            .search-form .btn-search:hover {
+                background: var(--parchment);
+                color: var(--ink);
+            }
+
+    .roster-card {
+        background: #FFFFFF;
+        border: 1px solid #E7E2D6;
+        border-radius: 6px;
+    }
+
+    .roster-table {
+        margin-bottom: 0;
+        table-layout: fixed;
+        width: 100%;
+        border-radius: 6px;
+        overflow: hidden;
+    }
+
+        .roster-table thead th {
+            background: var(--parchment);
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--slate);
+            border-bottom: 1px solid #E7E2D6;
+            padding: 0.65rem 0.85rem;
+        }
+
+        .roster-table tbody td {
+            padding: 0.65rem 0.85rem;
+            vertical-align: middle;
+            color: var(--ink);
+            border-color: #EFEBE1;
+            overflow-wrap: break-word;
+        }
+
+    .status-pill {
+        display: inline-block;
+        padding: 0.2rem 0.65rem;
+        border-radius: 3px;
+        font-size: 0.8rem;
+        font-weight: 500;
+        white-space: nowrap;
+    }
+
+    .status-pill--active {
+        background: rgba(63, 125, 88, 0.12);
+        color: #3F7D58;
+    }
+
+    .status-pill--inactive {
+        background: rgba(180, 72, 60, 0.12);
+        color: #B4483C;
+    }
+
+    .row-actions {
+        display: flex;
+        align-items: center;
+        gap: 0.65rem;
+        flex-wrap: nowrap;
+    }
+
+        .row-actions a {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--slate);
+            text-decoration: none;
+        }
+
+            .row-actions a:hover {
+                color: var(--ink);
+                text-decoration: underline;
+            }
+
+            .row-actions a.action-delete {
+                color: #B4483C;
+            }
+
+                .row-actions a.action-delete:hover {
+                    color: #8F3830;
+                }
+</style>
+
+<div class="container-fluid px-4 mt-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="page-heading mb-0">Student List</h2>
+
+        <a asp-action="Create" class="btn-brass">
+            Add Student
+        </a>
+    </div>
+
+    <form method="get" class="search-form mb-4">
+        <div class="input-group">
+            <input type="text"
+                   name="searchString"
+                   class="form-control"
+                   placeholder="Search by ID, Name or Email" />
+
+            <button type="submit" class="btn btn-search">
+                Search
+            </button>
+        </div>
+    </form>
+
+    <div class="roster-card">
+        <table class="table roster-table mb-0">
+            <colgroup>
+                <col style="width: 8%;">
+                <col style="width: 14%;">
+                <col style="width: 17%;">
+                <col style="width: 10%;">
+                <col style="width: 11%;">
+                <col style="width: 11%;">
+                <col style="width: 9%;">
+                <col style="width: 20%;">
+            </colgroup>
+            <thead>
+                <tr>
+                    <th>Student ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Mobile</th>
+                    <th>Department</th>
+                    <th>Course</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var student in Model)
+                {
+                    <tr>
+                        <td>@student.StudentId</td>
+                        <td>@student.FullName</td>
+                        <td>@student.Email</td>
+                        <td>@student.Mobile</td>
+                        <td>@student.Department</td>
+                        <td>@student.Course</td>
+
+                        <td>
+                            @if (student.Status == "Active")
+                            {
+                                <span class="status-pill status-pill--active">Active</span>
+                            }
+                            else
+                            {
+                                <span class="status-pill status-pill--inactive">Inactive</span>
+                            }
+                        </td>
+
+                        <td>
+                            <div class="row-actions">
+                                <a asp-action="Details" asp-route-id="@student.Id">Details</a>
+                                <a asp-action="Edit" asp-route-id="@student.Id">Edit</a>
+                                <a asp-action="Delete" asp-route-id="@student.Id" class="action-delete">Delete</a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 
 </div>

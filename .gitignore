@@ -36,7 +36,6 @@ logs/
 !.env.example
 
 # User-specific appsettings
-appsettings.json
 appsettings.Local.json
 appsettings.Development.local.json
 appsettings.Production.local.json

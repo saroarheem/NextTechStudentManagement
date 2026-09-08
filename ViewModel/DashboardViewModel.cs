@@ -10,6 +10,12 @@ namespace NextTechStudentManagement.ViewModel
 
         public int InactiveStudents { get; set; }
 
-        public List<Student> RecentStudents { get; set; }
+        public List<Student> ActiveStudentList { get; set; } = new();
+
+        public List<Student> RecentStudents { get; set; } = new();
+
+        public List<Student> InactiveStudentList { get; set; } = new();
+
+        public List<Student> AllStudentList { get; set; } = new();
     }
 }

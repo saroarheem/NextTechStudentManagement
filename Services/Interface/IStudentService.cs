@@ -15,4 +15,9 @@ public interface IStudentService
     Task DeleteAsync(int id);
 
     Task<IEnumerable<Student>> SearchAsync(string searchTerm);
+
+    Task<IEnumerable<Student>> GetFilteredAsync(
+    string? searchTerm = null,
+    string? status = null,
+    bool recent = false);
 }

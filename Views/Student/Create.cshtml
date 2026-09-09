@@ -1,66 +1,257 @@
-﻿@model Student
+﻿
+@model Student
 
 @{
     ViewData["Title"] = "Add Student";
 }
 
-<div class="container mt-4">
+<style>
+    .create-page {
+        width: 100%;
+        max-width: 720px;
+        margin: 2rem auto;
+        padding: 0 1.5rem;
+    }
 
-    <h2>Add Student</h2>
+    .create-heading {
+        margin: 0 0 1.75rem;
+        font-family: 'Source Serif 4', Georgia, serif;
+        font-size: 2rem;
+        font-weight: 700;
+        color: var(--ink);
+    }
 
-    <form asp-action="Create" method="post">
+    .create-form {
+        background: #FFFFFF;
+        border: 1px solid #E7E2D6;
+        border-radius: 6px;
+        padding: 2rem;
+    }
 
-        <div class="mb-3">
-            <label asp-for="StudentId" class="form-label"></label>
-            <input asp-for="StudentId" class="form-control" />
-            <span asp-validation-for="StudentId" class="text-danger"></span>
+    .form-field {
+        margin-bottom: 1.25rem;
+    }
+
+        .form-field label {
+            display: block;
+            margin-bottom: 0.45rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--slate);
+        }
+
+    .form-input,
+    .form-select {
+        display: block;
+        width: 100%;
+        box-sizing: border-box;
+        padding: 0.65rem 0.8rem;
+        background: #FFFFFF;
+        border: 1px solid #DCD7CB;
+        border-radius: 4px;
+        color: var(--ink);
+        font-family: inherit;
+        font-size: 0.9rem;
+        outline: none;
+        transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+
+        .form-input:focus,
+        .form-select:focus {
+            border-color: var(--brass);
+            box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.04);
+        }
+
+    .form-select {
+        cursor: pointer;
+        appearance: auto;
+    }
+
+    .validation-message {
+        display: block;
+        margin-top: 0.35rem;
+        font-size: 0.78rem;
+        color: #B4483C;
+    }
+
+    .form-actions {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        margin-top: 1.75rem;
+    }
+
+    .btn-save,
+    .btn-back {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 40px;
+        padding: 0.55rem 1.15rem;
+        border-radius: 4px;
+        font-family: inherit;
+        font-size: 0.9rem;
+        font-weight: 500;
+        text-decoration: none;
+        cursor: pointer;
+        transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+    }
+
+    .btn-save {
+        background: var(--ink);
+        border: 1px solid var(--ink);
+        color: #FFFFFF;
+    }
+
+        .btn-save:hover {
+            background: var(--brass);
+            border-color: var(--brass);
+            color: #FFFFFF;
+        }
+
+    .btn-back {
+        background: #FFFFFF;
+        border: 1px solid #DCD7CB;
+        color: var(--slate);
+    }
+
+        .btn-back:hover {
+            background: var(--parchment);
+            border-color: #C9C2B4;
+            color: var(--ink);
+        }
+
+    .form-input.input-validation-error,
+    .form-select.input-validation-error {
+        border-color: #B4483C;
+    }
+
+    @@media (max-width: 600px) {
+
+        .create-page {
+            margin: 1.25rem auto;
+            padding: 0 1rem;
+        }
+
+        .create-heading {
+            font-size: 1.6rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .create-form {
+            padding: 1.25rem;
+        }
+
+        .form-actions {
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        .btn-save,
+        .btn-back {
+            width: 100%;
+        }
+    }
+</style>
+
+<div class="create-page">
+
+    <h2 class="create-heading">
+        Add Student
+    </h2>
+
+    <form asp-action="Create"
+          method="post"
+          class="create-form">
+
+        <div class="form-field">
+            <label asp-for="StudentId"></label>
+
+            <input asp-for="StudentId"
+                   class="form-input" />
+
+            <span asp-validation-for="StudentId"
+                  class="validation-message"></span>
         </div>
 
-        <div class="mb-3">
-            <label asp-for="FullName" class="form-label"></label>
-            <input asp-for="FullName" class="form-control" />
-            <span asp-validation-for="FullName" class="text-danger"></span>
+        <div class="form-field">
+            <label asp-for="FullName"></label>
+
+            <input asp-for="FullName"
+                   class="form-input" />
+
+            <span asp-validation-for="FullName"
+                  class="validation-message"></span>
         </div>
 
-        <div class="mb-3">
-            <label asp-for="Email" class="form-label"></label>
-            <input asp-for="Email" class="form-control" />
-            <span asp-validation-for="Email" class="text-danger"></span>
+        <div class="form-field">
+            <label asp-for="Email"></label>
+
+            <input asp-for="Email"
+                   class="form-input" />
+
+            <span asp-validation-for="Email"
+                  class="validation-message"></span>
         </div>
 
-        <div class="mb-3">
-            <label asp-for="Mobile" class="form-label"></label>
-            <input asp-for="Mobile" class="form-control" />
-            <span asp-validation-for="Mobile" class="text-danger"></span>
+        <div class="form-field">
+            <label asp-for="Mobile"></label>
+
+            <input asp-for="Mobile"
+                   class="form-input" />
+
+            <span asp-validation-for="Mobile"
+                  class="validation-message"></span>
         </div>
 
-        <div class="mb-3">
-            <label asp-for="Department" class="form-label"></label>
-            <input asp-for="Department" class="form-control" />
+        <div class="form-field">
+            <label asp-for="Department"></label>
+
+            <input asp-for="Department"
+                   class="form-input" />
         </div>
 
-        <div class="mb-3">
-            <label asp-for="Course" class="form-label"></label>
-            <input asp-for="Course" class="form-control" />
+        <div class="form-field">
+            <label asp-for="Course"></label>
+
+            <input asp-for="Course"
+                   class="form-input" />
         </div>
 
-        <div class="mb-3">
-            <label asp-for="Status" class="form-label"></label>
+        <div class="form-field">
+            <label asp-for="Status"></label>
 
-            <select asp-for="Status" class="form-select">
-                <option value="">Select Status</option>
-                <option>Active</option>
-                <option>Inactive</option>
+            <select asp-for="Status"
+                    class="form-select">
+
+                <option value="">
+                    Select Status
+                </option>
+
+                <option value="Active">
+                    Active
+                </option>
+
+                <option value="Inactive">
+                    Inactive
+                </option>
+
             </select>
         </div>
 
-        <button type="submit" class="btn btn-primary">
-            Save
-        </button>
+        <div class="form-actions">
 
-        <a asp-action="Index" class="btn btn-secondary">
-            Back
-        </a>
+            <button type="submit"
+                    class="btn-save">
+                Save
+            </button>
+
+            <a asp-action="Index"
+               class="btn-back">
+                Back
+            </a>
+
+        </div>
 
     </form>
 
@@ -71,3 +262,4 @@
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
 }
+

@@ -1,48 +1,62 @@
-﻿namespace NextTechStudentManagement.Services.Service;
-using NextTechStudentManagement.Models;
+﻿using NextTechStudentManagement.Models;
 using NextTechStudentManagement.Repositories.Interface;
 using NextTechStudentManagement.Services.Interface;
 
-
-public class StudentService : IStudentService
+namespace NextTechStudentManagement.Services.Service
 {
-    private readonly IStudentRepository _repository;
-
-    public StudentService(IStudentRepository repository)
+    public class StudentService : IStudentService
     {
-        _repository = repository;
-    }
+        private readonly IStudentRepository _studentRepository;
 
-    public async Task<IEnumerable<Student>> GetAllAsync()
-    {
-        return await _repository.GetAllAsync();
-    }
+        public StudentService(
+            IStudentRepository studentRepository)
+        {
+            _studentRepository = studentRepository;
+        }
 
-    public async Task<Student?> GetByIdAsync(int id)
-    {
-        return await _repository.GetByIdAsync(id);
-    }
+        public async Task<IEnumerable<Student>> GetAllAsync()
+        {
+            return await _studentRepository.GetAllAsync();
+        }
 
-    public async Task CreateAsync(Student student)
-    {
-        await _repository.AddAsync(student);
-        await _repository.SaveAsync();
-    }
+        public async Task<Student?> GetByIdAsync(int id)
+        {
+            return await _studentRepository.GetByIdAsync(id);
+        }
 
-    public async Task UpdateAsync(Student student)
-    {
-        await _repository.UpdateAsync(student);
-        await _repository.SaveAsync();
-    }
+        public async Task CreateAsync(Student student)
+        {
+            await _studentRepository.AddAsync(student);
+            await _studentRepository.SaveAsync();
+        }
 
-    public async Task DeleteAsync(int id)
-    {
-        await _repository.DeleteAsync(id);
-        await _repository.SaveAsync();
-    }
+        public async Task UpdateAsync(Student student)
+        {
+            await _studentRepository.UpdateAsync(student);
+            await _studentRepository.SaveAsync();
+        }
 
-    public async Task<IEnumerable<Student>> SearchAsync(string searchTerm)
-    {
-        return await _repository.SearchAsync(searchTerm);
+        public async Task DeleteAsync(int id)
+        {
+            await _studentRepository.DeleteAsync(id);
+            await _studentRepository.SaveAsync();
+        }
+
+        public async Task<IEnumerable<Student>> SearchAsync(
+            string searchTerm)
+        {
+            return await _studentRepository.SearchAsync(searchTerm);
+        }
+
+        public async Task<IEnumerable<Student>> GetFilteredAsync(
+            string? searchTerm = null,
+            string? status = null,
+            bool recent = false)
+        {
+            return await _studentRepository.GetFilteredAsync(
+                searchTerm,
+                status,
+                recent);
+        }
     }
 }

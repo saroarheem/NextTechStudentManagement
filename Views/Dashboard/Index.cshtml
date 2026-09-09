@@ -1,4 +1,5 @@
-﻿@using NextTechStudentManagement.ViewModel
+﻿
+@using NextTechStudentManagement.ViewModel
 @model DashboardViewModel
 
 @{
@@ -6,11 +7,35 @@
 }
 
 <style>
+    /* =========================
+           DASHBOARD LAYOUT
+           ========================= */
+
+    .dashboard-container {
+        width: 100%;
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 1.5rem 1.5rem 3rem;
+        box-sizing: border-box;
+    }
+
     .dashboard-heading {
         font-family: 'Source Serif 4', Georgia, serif;
         font-weight: 700;
         color: var(--ink);
-        margin-bottom: 1.75rem;
+        margin: 0 0 1.75rem;
+    }
+
+
+    /* =========================
+           STATISTICS
+           ========================= */
+
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 1rem;
+        margin-bottom: 1.5rem;
     }
 
     .stat-tile {
@@ -19,7 +44,8 @@
         border-left: 3px solid var(--slate);
         border-radius: 4px;
         padding: 1.25rem 1.5rem;
-        height: 100%;
+        min-width: 0;
+        box-sizing: border-box;
     }
 
     .stat-tile--total {
@@ -34,14 +60,14 @@
         border-left-color: #B4483C;
     }
 
-    .stat-tile .stat-label {
+    .stat-label {
         font-size: 0.85rem;
         font-weight: 500;
         color: var(--slate);
         margin-bottom: 0.35rem;
     }
 
-    .stat-tile .stat-value {
+    .stat-value {
         font-family: 'Source Serif 4', Georgia, serif;
         font-size: 2.25rem;
         font-weight: 700;
@@ -49,45 +75,141 @@
         line-height: 1;
     }
 
+
+    /* =========================
+           STUDENT GRID
+           ========================= */
+
+    .student-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 1rem;
+    }
+
+
+    /* =========================
+           STUDENT CARD
+           ========================= */
+
     .roster-card {
         background: #FFFFFF;
         border: 1px solid #E7E2D6;
         border-radius: 6px;
         overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
     }
 
-        .roster-card .roster-header {
-            background: var(--parchment);
-            border-bottom: 1px solid #E7E2D6;
-            padding: 0.9rem 1.5rem;
-            font-weight: 600;
-            color: var(--ink);
-        }
+
+    /* =========================
+           CARD HEADER
+           ========================= */
+
+    .roster-header {
+        background: var(--parchment);
+        border-bottom: 1px solid #E7E2D6;
+        padding: 0.9rem 1.25rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+    }
+
+    .roster-header-content {
+        min-width: 0;
+    }
+
+    .roster-header h3 {
+        margin: 0;
+        font-size: 1rem;
+        font-weight: 600;
+        color: var(--ink);
+    }
+
+    .roster-header small {
+        display: block;
+        margin-top: 0.2rem;
+        font-size: 0.75rem;
+        color: var(--slate);
+    }
+
+    .roster-count {
+        flex-shrink: 0;
+        font-size: 0.75rem;
+        color: var(--slate);
+        white-space: nowrap;
+    }
+
+
+    /* =========================
+           TABLE
+           ========================= */
+
+    .roster-table-wrapper {
+        width: 100%;
+        overflow-x: auto;
+    }
 
     .roster-table {
-        margin-bottom: 0;
+        width: 100%;
+        border-collapse: collapse;
+        margin: 0;
     }
 
         .roster-table thead th {
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             font-weight: 600;
             color: var(--slate);
+            text-align: left;
             border-bottom: 1px solid #E7E2D6;
-            padding: 0.85rem 1.5rem;
+            padding: 0.7rem 1.25rem;
+            white-space: nowrap;
         }
 
         .roster-table tbody td {
-            padding: 0.85rem 1.5rem;
+            padding: 0.7rem 1.25rem;
             vertical-align: middle;
-            border-color: #EFEBE1;
+            border-bottom: 1px solid #EFEBE1;
+            font-size: 0.85rem;
+            color: var(--ink);
         }
+
+        .roster-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .roster-table tbody tr:hover {
+            background: #FCFAF5;
+        }
+
+    .student-id {
+        font-weight: 500;
+        white-space: nowrap;
+    }
+
+    .student-name {
+        font-weight: 500;
+        white-space: nowrap;
+    }
+
+    .student-department {
+        color: var(--slate);
+        white-space: nowrap;
+    }
+
+
+    /* =========================
+           STATUS
+           ========================= */
 
     .status-pill {
         display: inline-block;
         padding: 0.2rem 0.65rem;
         border-radius: 3px;
-        font-size: 0.8rem;
+        font-size: 0.75rem;
         font-weight: 500;
+        white-space: nowrap;
     }
 
     .status-pill--active {
@@ -99,76 +221,628 @@
         background: rgba(180, 72, 60, 0.12);
         color: #B4483C;
     }
+
+
+    /* =========================
+           EMPTY STATE
+           ========================= */
+
+    .empty-students {
+        min-height: 180px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+        text-align: center;
+        color: var(--slate);
+        font-size: 0.85rem;
+        box-sizing: border-box;
+    }
+
+
+    /* =========================
+           CARD FOOTER
+           ========================= */
+
+    .roster-footer {
+        padding: 0.8rem 1.25rem;
+        border-top: 1px solid #E7E2D6;
+        background: #FFFFFF;
+        display: flex;
+        justify-content: flex-end;
+        margin-top: auto;
+    }
+
+    .see-all-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        color: var(--ink);
+        text-decoration: none;
+        font-size: 0.8rem;
+        font-weight: 600;
+        transition: color 0.2s ease, transform 0.2s ease;
+    }
+
+        .see-all-link:hover {
+            color: var(--slate);
+        }
+
+    .see-all-arrow {
+        display: inline-block;
+        transition: transform 0.2s ease;
+    }
+
+    .see-all-link:hover .see-all-arrow {
+        transform: translateX(3px);
+    }
+
+
+    /* =========================
+           TABLET
+           ========================= */
+
+    @@media (max-width: 900px) {
+
+        .stats-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .student-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+
+    /* =========================
+           MOBILE
+           ========================= */
+
+    @@media (max-width: 600px) {
+
+        .dashboard-container {
+            padding: 1.25rem 1rem 2rem;
+        }
+
+        .dashboard-heading {
+            margin-bottom: 1.25rem;
+        }
+
+        .stats-grid {
+            grid-template-columns: 1fr;
+            gap: 0.75rem;
+        }
+
+        .stat-tile {
+            padding: 1rem 1.25rem;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+        }
+
+        .student-grid {
+            gap: 0.75rem;
+        }
+
+        .roster-header {
+            padding: 0.85rem 1rem;
+        }
+
+        .roster-table thead th,
+        .roster-table tbody td {
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+
+        .roster-footer {
+            padding: 0.75rem 1rem;
+        }
+    }
 </style>
 
-<div class="container mt-4">
 
-    <h2 class="dashboard-heading">Admin Dashboard</h2>
+<div class="dashboard-container">
 
-    <div class="row g-3 mb-4">
+    <!-- =========================
+         PAGE HEADING
+         ========================= -->
 
-        <div class="col-md-4">
-            <div class="stat-tile stat-tile--total">
-                <div class="stat-label">Total Students</div>
-                <div class="stat-value">@Model.TotalStudents</div>
+    <h2 class="dashboard-heading">
+        Admin Dashboard
+    </h2>
+
+
+    <!-- =========================
+         STUDENT STATISTICS
+         ========================= -->
+
+    <div class="stats-grid">
+
+        <!-- Total Students -->
+
+        <div class="stat-tile stat-tile--total">
+
+            <div class="stat-label">
+                Total Students
             </div>
+
+            <div class="stat-value">
+                @Model.TotalStudents
+            </div>
+
         </div>
 
-        <div class="col-md-4">
-            <div class="stat-tile stat-tile--active">
-                <div class="stat-label">Active Students</div>
-                <div class="stat-value">@Model.ActiveStudents</div>
+
+        <!-- Active Students -->
+
+        <div class="stat-tile stat-tile--active">
+
+            <div class="stat-label">
+                Active Students
             </div>
+
+            <div class="stat-value">
+                @Model.ActiveStudents
+            </div>
+
         </div>
 
-        <div class="col-md-4">
-            <div class="stat-tile stat-tile--inactive">
-                <div class="stat-label">Inactive Students</div>
-                <div class="stat-value">@Model.InactiveStudents</div>
+
+        <!-- Inactive Students -->
+
+        <div class="stat-tile stat-tile--inactive">
+
+            <div class="stat-label">
+                Inactive Students
             </div>
+
+            <div class="stat-value">
+                @Model.InactiveStudents
+            </div>
+
         </div>
 
     </div>
 
-    <div class="roster-card">
 
-        <div class="roster-header">
-            Recently Added Students
+    <!-- =========================
+         FOUR STUDENT LISTS
+         ========================= -->
+
+    <div class="student-grid">
+
+
+        <!-- =========================
+             ACTIVE STUDENTS
+             ========================= -->
+
+        <div class="roster-card">
+
+            <div class="roster-header">
+
+                <div class="roster-header-content">
+
+                    <h3>
+                        Active Students
+                    </h3>
+
+                    <small>
+                        Currently active students
+                    </small>
+
+                </div>
+
+                <span class="roster-count">
+                    @Model.ActiveStudents total
+                </span>
+
+            </div>
+
+
+            @if (Model.ActiveStudentList.Any())
+            {
+                <div class="roster-table-wrapper">
+
+                    <table class="roster-table">
+
+                        <thead>
+                            <tr>
+                                <th>Student ID</th>
+                                <th>Name</th>
+                                <th>Department</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            @foreach (var student in Model.ActiveStudentList)
+                            {
+                                <tr>
+
+                                    <td class="student-id">
+                                        @student.StudentId
+                                    </td>
+
+                                    <td class="student-name">
+                                        @student.FullName
+                                    </td>
+
+                                    <td class="student-department">
+                                        @student.Department
+                                    </td>
+
+                                    <td>
+
+                                        <span class="status-pill status-pill--active">
+                                            @student.Status
+                                        </span>
+
+                                    </td>
+
+                                </tr>
+                            }
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+            }
+            else
+            {
+                <div class="empty-students">
+                    No active students found.
+                </div>
+            }
+
+
+            <div class="roster-footer">
+
+                <a asp-controller="Student"
+                   asp-action="Index"
+                   asp-route-status="Active"
+                   class="see-all-link">
+
+                    <span>See All</span>
+
+                    <span class="see-all-arrow">
+                        →
+                    </span>
+
+                </a>
+
+            </div>
+
         </div>
 
-        <div class="table-responsive">
-            <table class="table roster-table">
 
-                <thead>
-                    <tr>
-                        <th>Student ID</th>
-                        <th>Name</th>
-                        <th>Department</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
 
-                <tbody>
+        <!-- =========================
+             RECENT STUDENTS
+             ========================= -->
 
-                    @foreach (var student in Model.RecentStudents)
-                    {
-                        <tr>
-                            <td>@student.StudentId</td>
-                            <td>@student.FullName</td>
-                            <td>@student.Department</td>
-                            <td>
-                                <span class="status-pill @(student.Status == "Active" ? "status-pill--active" : "status-pill--inactive")">
-                                    @student.Status
-                                </span>
-                            </td>
-                        </tr>
-                    }
+        <div class="roster-card">
 
-                </tbody>
+            <div class="roster-header">
 
-            </table>
+                <div class="roster-header-content">
+
+                    <h3>
+                        Recent Students
+                    </h3>
+
+                    <small>
+                        Students added in the last 30 days
+                    </small>
+
+                </div>
+
+                <span class="roster-count">
+                    Latest 5
+                </span>
+
+            </div>
+
+
+            @if (Model.RecentStudents.Any())
+            {
+                <div class="roster-table-wrapper">
+
+                    <table class="roster-table">
+
+                        <thead>
+                            <tr>
+                                <th>Student ID</th>
+                                <th>Name</th>
+                                <th>Department</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            @foreach (var student in Model.RecentStudents)
+                            {
+                                <tr>
+
+                                    <td class="student-id">
+                                        @student.StudentId
+                                    </td>
+
+                                    <td class="student-name">
+                                        @student.FullName
+                                    </td>
+
+                                    <td class="student-department">
+                                        @student.Department
+                                    </td>
+
+                                    <td>
+
+                                        <span class="status-pill @(student.Status == "Active"
+                                                                                        ? "status-pill--active"
+                                                                                        : "status-pill--inactive")">
+
+                                            @student.Status
+
+                                        </span>
+
+                                    </td>
+
+                                </tr>
+                            }
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+            }
+            else
+            {
+                <div class="empty-students">
+                    No recent students found.
+                </div>
+            }
+
+
+            <div class="roster-footer">
+
+                <a asp-controller="Student"
+                   asp-action="Index"
+                   asp-route-recent="true"
+                   class="see-all-link">
+
+                    <span>See All</span>
+
+                    <span class="see-all-arrow">
+                        →
+                    </span>
+
+                </a>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =========================
+             INACTIVE STUDENTS
+             ========================= -->
+
+        <div class="roster-card">
+
+            <div class="roster-header">
+
+                <div class="roster-header-content">
+
+                    <h3>
+                        Inactive Students
+                    </h3>
+
+                    <small>
+                        Currently inactive students
+                    </small>
+
+                </div>
+
+                <span class="roster-count">
+                    @Model.InactiveStudents total
+                </span>
+
+            </div>
+
+
+            @if (Model.InactiveStudentList.Any())
+            {
+                <div class="roster-table-wrapper">
+
+                    <table class="roster-table">
+
+                        <thead>
+                            <tr>
+                                <th>Student ID</th>
+                                <th>Name</th>
+                                <th>Department</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            @foreach (var student in Model.InactiveStudentList)
+                            {
+                                <tr>
+
+                                    <td class="student-id">
+                                        @student.StudentId
+                                    </td>
+
+                                    <td class="student-name">
+                                        @student.FullName
+                                    </td>
+
+                                    <td class="student-department">
+                                        @student.Department
+                                    </td>
+
+                                    <td>
+
+                                        <span class="status-pill status-pill--inactive">
+                                            @student.Status
+                                        </span>
+
+                                    </td>
+
+                                </tr>
+                            }
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+            }
+            else
+            {
+                <div class="empty-students">
+                    No inactive students found.
+                </div>
+            }
+
+
+            <div class="roster-footer">
+
+                <a asp-controller="Student"
+                   asp-action="Index"
+                   asp-route-status="Inactive"
+                   class="see-all-link">
+
+                    <span>See All</span>
+
+                    <span class="see-all-arrow">
+                        →
+                    </span>
+
+                </a>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =========================
+             ALL STUDENTS
+             ========================= -->
+
+        <div class="roster-card">
+
+            <div class="roster-header">
+
+                <div class="roster-header-content">
+
+                    <h3>
+                        All Students
+                    </h3>
+
+                    <small>
+                        Latest registered students
+                    </small>
+
+                </div>
+
+                <span class="roster-count">
+                    @Model.TotalStudents total
+                </span>
+
+            </div>
+
+
+            @if (Model.AllStudentList.Any())
+            {
+                <div class="roster-table-wrapper">
+
+                    <table class="roster-table">
+
+                        <thead>
+                            <tr>
+                                <th>Student ID</th>
+                                <th>Name</th>
+                                <th>Department</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            @foreach (var student in Model.AllStudentList)
+                            {
+                                <tr>
+
+                                    <td class="student-id">
+                                        @student.StudentId
+                                    </td>
+
+                                    <td class="student-name">
+                                        @student.FullName
+                                    </td>
+
+                                    <td class="student-department">
+                                        @student.Department
+                                    </td>
+
+                                    <td>
+
+                                        <span class="status-pill @(student.Status == "Active"
+                                                                                        ? "status-pill--active"
+                                                                                        : "status-pill--inactive")">
+
+                                            @student.Status
+
+                                        </span>
+
+                                    </td>
+
+                                </tr>
+                            }
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+            }
+            else
+            {
+                <div class="empty-students">
+                    No students found.
+                </div>
+            }
+
+
+            <div class="roster-footer">
+
+                <a asp-controller="Student"
+                   asp-action="Index"
+                   class="see-all-link">
+
+                    <span>See All</span>
+
+                    <span class="see-all-arrow">
+                        →
+                    </span>
+
+                </a>
+
+            </div>
+
         </div>
 
     </div>
 
 </div>
+

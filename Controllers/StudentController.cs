@@ -14,15 +14,15 @@ public class StudentController : Controller
         _studentService = studentService;
     }
 
-    public async Task<IActionResult> Index(string searchTerm)
+    public async Task<IActionResult> Index(
+            string? searchTerm,
+            string? status,
+            bool recent = false)
     {
-        if (!string.IsNullOrWhiteSpace(searchTerm))
-        {
-            var result = await _studentService.SearchAsync(searchTerm);
-            return View(result);
-        }
-
-        var students = await _studentService.GetAllAsync();
+        var students = await _studentService.GetFilteredAsync(
+            searchTerm,
+            status,
+            recent);
 
         return View(students);
     }

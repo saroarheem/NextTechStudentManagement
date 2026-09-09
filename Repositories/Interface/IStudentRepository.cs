@@ -1,21 +1,38 @@
 ﻿using NextTechStudentManagement.Models;
-using NextTechStudentManagement.Models;
 
-namespace NextTechStudentManagement.Repositories.Interface;
-
-public interface IStudentRepository
+namespace NextTechStudentManagement.Repositories.Interface
 {
-    Task<IEnumerable<Student>> GetAllAsync();
+    public interface IStudentRepository
+    {
+        Task<IEnumerable<Student>> GetAllAsync();
 
-    Task<Student?> GetByIdAsync(int id);
+        Task<IEnumerable<Student>> GetAllAsync(int take);
 
-    Task AddAsync(Student student);
+        Task<Student?> GetByIdAsync(int id);
 
-    Task UpdateAsync(Student student);
+        Task AddAsync(Student student);
 
-    Task DeleteAsync(int id);
+        Task UpdateAsync(Student student);
 
-    Task SaveAsync();
+        Task DeleteAsync(int id);
 
-    Task<IEnumerable<Student>> SearchAsync(string searchTerm);
+        Task SaveAsync();
+
+        Task<IEnumerable<Student>> SearchAsync(string searchTerm);
+
+        Task<int> GetTotalCountAsync();
+
+        Task<int> GetCountByStatusAsync(string status);
+
+        Task<IEnumerable<Student>> GetByStatusAsync(
+            string status,
+            int take);
+
+        Task<IEnumerable<Student>> GetRecentAsync(int take);
+
+        Task<IEnumerable<Student>> GetFilteredAsync(
+            string? searchTerm = null,
+            string? status = null,
+            bool recent = false);
+    }
 }

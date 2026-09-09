@@ -1,34 +1,23 @@
-﻿
-namespace NextTechStudentManagement.Controllers;
-using Microsoft.AspNetCore.Mvc;
-using NextTechStudentManagement.Data;
-using NextTechStudentManagement.ViewModel;
+﻿using Microsoft.AspNetCore.Mvc;
+using NextTechStudentManagement.Services.Interface;
 
-public class DashboardController : Controller
+namespace NextTechStudentManagement.Controllers
+{
+    public class DashboardController : Controller
     {
-        private readonly AppDbContext _context;
+        private readonly IDashboardService _dashboardService;
 
-        public DashboardController(AppDbContext context)
+        public DashboardController(
+            IDashboardService dashboardService)
         {
-            _context = context;
+            _dashboardService = dashboardService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var model = new DashboardViewModel
-            {
-                TotalStudents = _context.Students.Count(),
-
-                ActiveStudents = _context.Students.Count(s => s.Status == "Active"),
-
-                InactiveStudents = _context.Students.Count(s => s.Status == "Inactive"),
-
-                RecentStudents = _context.Students
-                    .OrderByDescending(s => s.CreatedAt)
-                    .Take(5)
-                    .ToList()
-            };
+            var model = await _dashboardService.GetDashboardAsync();
 
             return View(model);
         }
     }
+}
